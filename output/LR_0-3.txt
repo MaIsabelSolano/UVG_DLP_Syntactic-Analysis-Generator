@@ -1,0 +1,15 @@
+digraph AFN
+{
+	rankdir="LR";
+	0 [shape=circle];
+	1 [shape=doublecircle];
+	2 [shape=circle];
+	3 [shape=circle];
+	initial [label = "", shape=none, height = .0, width = .0]
+
+	initial -> 0 
+
+	0 -> 1 [label=expression];
+	0 -> 2 [label=LPAREN];
+	2 -> 3 [label=expression];
+}

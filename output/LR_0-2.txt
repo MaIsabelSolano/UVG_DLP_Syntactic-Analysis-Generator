@@ -1,0 +1,48 @@
+digraph AFN
+{
+	rankdir="LR";
+	0 [shape=circle];
+	1 [shape=doublecircle];
+	2 [shape=circle];
+	3 [shape=circle];
+	4 [shape=circle];
+	5 [shape=circle];
+	6 [shape=circle];
+	7 [shape=circle];
+	8 [shape=circle];
+	9 [shape=circle];
+	10 [shape=circle];
+	11 [shape=circle];
+	12 [shape=circle];
+	initial [label = "", shape=none, height = .0, width = .0]
+
+	initial -> 0 
+
+	0 -> 1 [label=expression];
+	0 -> 2 [label=term];
+	0 -> 3 [label=ID];
+	0 -> 4 [label=NUMBER];
+	0 -> 5 [label=LPAREN];
+	1 -> 6 [label=PLUS];
+	1 -> 7 [label=MINUS];
+	2 -> 8 [label=TIMES];
+	2 -> 9 [label=DIV];
+	5 -> 10 [label=expression];
+	5 -> 2 [label=term];
+	5 -> 3 [label=ID];
+	5 -> 4 [label=NUMBER];
+	6 -> 11 [label=term];
+	6 -> 3 [label=ID];
+	6 -> 4 [label=NUMBER];
+	6 -> 5 [label=LPAREN];
+	7 -> 12 [label=term];
+	7 -> 3 [label=ID];
+	7 -> 4 [label=NUMBER];
+	7 -> 5 [label=LPAREN];
+	8 -> 8 [label=factor];
+	9 -> 9 [label=factor];
+	11 -> 8 [label=TIMES];
+	11 -> 9 [label=DIV];
+	12 -> 8 [label=TIMES];
+	12 -> 9 [label=DIV];
+}
