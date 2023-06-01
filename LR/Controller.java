@@ -40,12 +40,12 @@ public class Controller {
 
         System.out.println("\nFIRST(n)");
         for (String s: productionList) {
-            System.out.println(s + ":" + LR_0.FIRST(s).toString());
+            System.out.println(s + ":" + LR_0.FIRST2(s).toString());
         }
 
         System.out.println("\nFOLLOW(n)");
         for (String s: productionList) {
-            System.out.println(s + ":" + LR_0.FOLLOW(s).toString());
+            System.out.println(s + ":" + LR_0.FOLLOW2(s).toString());
         }
 
         System.out.println();

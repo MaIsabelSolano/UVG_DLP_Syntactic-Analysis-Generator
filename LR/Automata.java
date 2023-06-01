@@ -218,6 +218,42 @@ public class Automata {
         return result; 
     }
 
+    public ArrayList<String> FIRST2(String X) {
+        ArrayList<String> result = new ArrayList<>(); 
+
+        for (Production p: productions) {
+            // Match name to production
+            if (p.getName().equals(X)) {
+
+                // rule 1
+                if (p.isTerminal()) {
+                    result.add(X);
+                    return result;
+                }
+
+                // rule 2
+                String firstSymbol = p.getProduce().get(0);
+
+                // Avoid infinite recursion
+                if (firstSymbol.equals(X)) continue;
+
+                else {
+                    ArrayList<String> recursiveCall = FIRST2(firstSymbol);
+
+                    for (String s: recursiveCall) {
+                        if (!result.contains(s)) {
+                            result.add(s);
+                        }
+                    }
+                }
+                
+
+            }
+        }
+
+        return result; 
+    }
+
     public ArrayList<String> FOLLOW(String X) {
         ArrayList<String> result = new ArrayList<>(); 
 
@@ -253,6 +289,52 @@ public class Automata {
             }
         }
 
+
+        return result; 
+    }
+
+    public ArrayList<String> FOLLOW2(String X) {
+        ArrayList<String> result = new ArrayList<>(); 
+
+        // Rule 1
+        if (X.equals(productions.get(0).getName())) {
+            result.add("$");
+            return result;
+        }
+
+        //  Other rules
+        for (Production p: productions) {
+
+            // Match name to production
+            if (p.getProduce().contains(X)) {
+                int index = p.getProduce().indexOf(X);
+                // rule 2
+                if (index < p.getProduce().size() - 1) {
+                    String follow = p.getProduce().get(index + 1);
+
+                    // Avoid infinite recursion
+                    if (X.equals(follow)) continue;
+
+                    ArrayList<String> res = FIRST2(follow);
+                    for (String s: res) {
+                        if (!result.contains(s) && !s.equals("ε")) result.add(s);
+                    }
+                }
+                // rule 3
+                else {
+                    String follow = p.getName();
+
+                    // Avoid infinite recursion
+                    if (X.equals(follow)) continue;
+
+                    ArrayList<String> res = FOLLOW2(follow);
+                    for (String s: res) {
+                        if (!result.contains(s)) result.add(s);
+                    }
+                }
+            }
+
+        }
 
         return result; 
     }
