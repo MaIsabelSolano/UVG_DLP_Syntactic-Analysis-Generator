@@ -98,12 +98,33 @@ public class Parsing_Table {
 
         System.out.printf("|%-4s|", "");
         for (int i = 0; i < terminals.length; i ++){
-            System.out.printf("%-11s|", terminals[i]);
+
+            String symbol = "";
+
+            if (terminals[i].toLowerCase().equals("number")) symbol = "n";
+            if (terminals[i].toLowerCase().equals("plus")) symbol = "+";
+            if (terminals[i].toLowerCase().equals("times")) symbol = "*";
+            if (terminals[i].toLowerCase().equals("lparen")) symbol = "(";
+            if (terminals[i].toLowerCase().equals("rparen")) symbol = ")";
+            if (terminals[i].toLowerCase().equals("id")) symbol = "id";
+            if (terminals[i].toLowerCase().equals("minus")) symbol = "-";
+            if (terminals[i].toLowerCase().equals("div")) symbol = "/";
+            if (terminals[i].toLowerCase().equals("semicolon")) symbol = ";";
+            if (terminals[i].toLowerCase().equals("eq")) symbol = "=";
+            if (terminals[i].toLowerCase().equals("assignop")) symbol = ":=";
+            if (terminals[i].toLowerCase().equals("lt")) symbol = "<";
+            if (terminals[i].toLowerCase().equals("$")) symbol = "$";
+
+            System.out.printf("%-5s|", symbol);
+            // System.out.printf("%-5s|", terminals[i]);
         }
 
         
         for (int i = 0; i < nonTerminals.length; i ++){
-            System.out.printf("%-11s|", nonTerminals[i]);
+            String initial = "" + nonTerminals[i].charAt(0);
+            System.out.printf("%-5s|", initial);
+            // System.out.printf("%-5s|", nonTerminals[i]);
+
         }
 
         System.out.println();
@@ -111,8 +132,8 @@ public class Parsing_Table {
         for (int i = 0; i < TABLE.length; i ++) {        
             System.out.printf("|%-4s|", states[i]);    
             for (int j = 0; j < TABLE[0].length; j++) {
-                if (TABLE[i][j] == null) System.out.printf("%-11s|", "-");
-                else System.out.printf("%-11s|", TABLE[i][j]);
+                if (TABLE[i][j] == null) System.out.printf("%-5s|", "-");
+                else System.out.printf("%-5s|", TABLE[i][j]);
             }
             System.out.println();
         }

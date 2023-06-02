@@ -7,8 +7,7 @@
 %token ID
 %token PLUS
 %token TIMES
-%token LPAREN 
-%token RPAREN
+%token LPAREN RPAREN
 
 expression:
     expression PLUS term

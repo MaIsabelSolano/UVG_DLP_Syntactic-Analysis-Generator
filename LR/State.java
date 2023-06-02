@@ -27,6 +27,7 @@ public class State {
             return false;
         }
         State other = (State) obj;
+
         return productions.equals(other.productions);
     }
 
