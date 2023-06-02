@@ -310,12 +310,9 @@ public class Automata {
                 int index = p.getProduce().indexOf(X);
                 // rule 2
                 if (index < p.getProduce().size() - 1) {
-                    String follow = p.getProduce().get(index + 1);
+                    String first = p.getProduce().get(index + 1);
 
-                    // Avoid infinite recursion
-                    if (X.equals(follow)) continue;
-
-                    ArrayList<String> res = FIRST2(follow);
+                    ArrayList<String> res = FIRST2(first);
                     for (String s: res) {
                         if (!result.contains(s) && !s.equals("ε")) result.add(s);
                     }
@@ -371,6 +368,10 @@ public class Automata {
 
     public State getInitialState() {
         return initialState;
+    }
+
+    public ArrayList<Production> getProductions() {
+        return productions;
     }
 
     

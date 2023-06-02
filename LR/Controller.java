@@ -50,6 +50,8 @@ public class Controller {
 
         System.out.println();
 
+        Parsing_Table pt = new Parsing_Table(LR_0);
+
         GraphToFile gtf = new GraphToFile();
         gtf.generateFile("output/LR_0-"+selectedDoc+".txt", LR_0);
         TerminalCommand tc = new TerminalCommand();
