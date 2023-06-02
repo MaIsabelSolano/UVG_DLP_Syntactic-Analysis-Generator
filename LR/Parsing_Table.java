@@ -1,7 +1,12 @@
 package LR;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Stack;
 
 
 public class Parsing_Table {
@@ -88,10 +93,6 @@ public class Parsing_Table {
             }
         }
 
-
-
-
-
         // Table printing
 
         System.out.println();
@@ -137,6 +138,40 @@ public class Parsing_Table {
             }
             System.out.println();
         }
+
+
+        // SIMULATION
+        
+        // Reading found tokens from Tokens.txt
+        Stack<String> tokensFound = new Stack<>();
+
+
+        String filePath = "output/Tokens.txt";
+
+        try {
+
+            List<String> lines = Files.readAllLines(Paths.get(filePath));
+
+            // starts at 1 to ignore the name of the column
+            for (int i = 1; i < lines.size(); i ++) {
+                String[] tuple = lines.get(i).split("->");
+
+                String left = tuple[0].replaceAll("\\s+", "");
+                String right = tuple[1].replaceAll("\\s+", "");
+
+                // ignore WS
+                if (!left.equals("\\n") && !left.equals("\\s") && !right.equals("ws")) {
+                    tokensFound.add(right);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Tokens found");
+        System.out.println(tokensFound.toString());
+        
 
     }
 

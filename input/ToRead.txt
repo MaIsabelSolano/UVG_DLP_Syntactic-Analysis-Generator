@@ -1,11 +1,5 @@
-Hello this a text to test all the automatas!
-
-12.23   2.33E2 
-
-Happy ! = S-Ad
-
-+ = += / Cents *
-
-if this else elseal then
-
-function_lol()
+var1 + var2 * (var1 * var2)
+(id1 + id4) * id3
+(id2 * (id1 + id5))
+var1 + (var2 + (var3 + (var4 * var1)) * var2) + (var3 + var4 * (var1 * var2)) * var3
+bigIdentifierInCamelCase
