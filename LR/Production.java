@@ -74,8 +74,15 @@ public class Production {
         
         Production o = (Production) obj;
 
-        for (String s: produce) {
-            if (!o.getProduce().contains(s)) return false;
+        if (o.getProduce().size() != produce.size()) return false;
+
+        // for (String s: produce) {
+
+        //     if (!o.getProduce().contains(s)) return false;
+        // }
+
+        for (int i = 0; i < produce.size(); i++ ) {
+            if (!produce.get(i).equals(o.getProduce().get(i))) return false;
         }
 
         return true; 

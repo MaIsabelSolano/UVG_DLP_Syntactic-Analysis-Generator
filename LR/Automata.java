@@ -50,20 +50,25 @@ public class Automata {
         firstProduction.add(productionsDot.get(0));
         State initialSTATE = CLOUSURE(firstProduction);
 
-        states.add(initialSTATE);
+        System.out.println("initial state");
+        System.out.println(initialSTATE.toString());
 
+        states.add(initialSTATE);
 
         Queue<State> queue = new LinkedList<>();
         queue.add(initialSTATE);
 
-        System.out.println("\nConstruction ");
+        System.out.println("\nConstruction... ");
 
         int emergency = 0;
-        while( !queue.isEmpty() && emergency < 50) {
+        while( !queue.isEmpty() && emergency < 100) {
+            // System.out.println("\nNew state from queue:");
             State currentState = queue.peek();
 
-            System.out.println("current");
-            System.out.println(currentState.toString());
+            // System.out.println("\ncurrent");
+            // System.out.println(currentState.toString());
+
+            // System.out.println("\nExpressions: "+expressions.toString());
 
             for (String expression: expressions) {
 
@@ -71,15 +76,26 @@ public class Automata {
 
                 if (nextState == null) continue;
 
-                System.out.println("State: I_" + currentState.getStateNum() + " Element: " + expression + " Queue size: " + queue.size());
+                // System.out.println("\nState: I_" + currentState.getStateNum() + " Element: " + expression + " Queue size: " + queue.size());
+
+                // System.out.println(nextState);
 
                 Transition newTransition = new Transition(currentState, expression, nextState);
-                if (!transitions.contains(newTransition)) transitions.add(newTransition);
+                if (!transitions.contains(newTransition)) {
+                    // System.out.println("adding transition\n");
+                    transitions.add(newTransition);
+                } // else System.out.println("already in transitions\n");
                 
                 //System.out.println(nextState);
 
-                if (!queue.contains(nextState)) queue.add(nextState);
-                if (!states.contains(nextState)) states.add(nextState);
+                if (!queue.contains(nextState)) {
+                    // System.out.println("Adding state to queue\n");
+                    queue.add(nextState);
+                } // else {System.out.println("Already in queue\n");}
+                if (!states.contains(nextState)) {
+                    // System.out.println("Adding to states!\n");
+                    states.add(nextState);
+                } // else {System.out.println("Already in states\n");}
 
             }
 
@@ -108,8 +124,12 @@ public class Automata {
                     if (i + 1 < p.getProduce().size()) {
                         // There other expresions after
                         String nextProduction = p.getProduce().get(i + 1);
+                        //String nextProduction = p.getName();
+                        ArrayList<String> first = FIRST(nextProduction);
+                        // System.out.println("First de "+ nextProduction +": " + first.toString());
                         
-                        for (String f: FIRST(nextProduction)) {
+                        if (!first.contains(nextProduction)) first.add(0, nextProduction);
+                        for (String f: first) {
                             for (Production fp: productionsDot) {
                                 if (fp.getName().equals(f)) {
                                     if (!fp.isTerminal()){
@@ -120,7 +140,7 @@ public class Automata {
                         }
                         
                     } else {
-                        // No more productions, so do nothing
+                        // No more productions after the dot, so do nothing
                     }
                 }
             }
