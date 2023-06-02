@@ -69,19 +69,15 @@ public class Parsing_Table {
 
                 if (p.getProduce().get(p.getProduce().size() - 1).equals(".")) {
                     // . is the last thing it that production
-                    System.out.println(p);
+                    System.out.println(Integer.toString(s.getStateNum()) + ": " + p);
                     
                     // let's find it´s corresponding productino
                     int Ipos = getEqualProduction(p, automata.getProductions());
-
-                    System.out.println(automata.FOLLOW2(p.getName()));
 
                     // get follow of the left side of the production
                     for (String X: automata.FOLLOW2(p.getName())) {
                         int Spos = getPosition(X, terminals, nonTerminals);
 
-                        System.out.println(p.getName() + ", " +X);
-                        System.out.println(Spos);
                         
                         // Add to the table
                         TABLE[s.getStateNum()][Spos] = "r" + Integer.toString(Ipos);
@@ -128,10 +124,8 @@ public class Parsing_Table {
 
         // Checks first the terminals
         for (int i = 0; i < terminals.length; i++) {
-            System.out.println(X+", "+terminals[i] + " " + Integer.toString(X.length()) + " " + Integer.toString(terminals[i].length()));
-            System.out.println();
-            System.out.println(terminals[i].length());
-            if (X == terminals[i]) return pos; // Break when found
+
+            if (X.equals(terminals[i])) return pos; // Break when found
             else pos ++;
         }
 
@@ -170,6 +164,7 @@ public class Parsing_Table {
 
         for (int i = 0; i < productions.size(); i++) {
             if (equalProductions(p.getProduce(), productions.get(i).getProduce())) return i;
+            
         }
 
         return -1;
