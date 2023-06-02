@@ -33,6 +33,28 @@ public class Parsing_Table {
         
         String[][] TABLA = new String[states.length][nonTerminals.length + terminals.length];
 
+
+        // Shifts
+        for (Transition t: automata.getTransitions()) {
+
+            // get Symbol or Production position
+            int pos = getPosition(t.getExpresion(), terminals, nonTerminals);
+
+            // determine if its a terminal or not
+            boolean isTerminal = (pos < terminals.length)? true: false;
+
+            // replace
+            if (isTerminal) TABLA[t.getInitialState().getStateNum()][pos] = "s" + Integer.toString(t.getFinalState().getStateNum());
+            else TABLA[t.getInitialState().getStateNum()][pos] = Integer.toString(t.getFinalState().getStateNum());
+
+        }
+
+
+
+
+
+        // Table printing
+
         System.out.println();
 
         System.out.printf("|%-12s|", "");
@@ -57,10 +79,21 @@ public class Parsing_Table {
 
     }
 
-    @Override
-    public String toString() {
-        // TODO Auto-generated method stub
-        return super.toString();
+    private int getPosition(String X, String[] terminals, String[] nonTerminals) {
+        int pos = 0;
+
+        for (int i = 0; i < terminals.length; i++) {
+            if (X == terminals[i]) return pos;
+            else pos ++;
+        }
+
+        for (int i = 0; i < nonTerminals.length; i++) {
+            if (X == nonTerminals[i]) return pos;
+            else pos ++;
+        }
+
+        return pos;
     }
+
     
 }
