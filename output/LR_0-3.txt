@@ -12,4 +12,5 @@ digraph AFN
 	0 -> 1 [label=expression];
 	0 -> 2 [label=LPAREN];
 	2 -> 3 [label=expression];
+	3 -> 3 [label=RPAREN];
 }

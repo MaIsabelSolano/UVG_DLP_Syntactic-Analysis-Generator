@@ -98,12 +98,12 @@ public class Parsing_Table {
 
         System.out.printf("|%-4s|", "");
         for (int i = 0; i < terminals.length; i ++){
-            System.out.printf("%-12s|", terminals[i]);
+            System.out.printf("%-11s|", terminals[i]);
         }
 
         
         for (int i = 0; i < nonTerminals.length; i ++){
-            System.out.printf("%-12s|", nonTerminals[i]);
+            System.out.printf("%-11s|", nonTerminals[i]);
         }
 
         System.out.println();
@@ -111,8 +111,8 @@ public class Parsing_Table {
         for (int i = 0; i < TABLE.length; i ++) {        
             System.out.printf("|%-4s|", states[i]);    
             for (int j = 0; j < TABLE[0].length; j++) {
-                if (TABLE[i][j] == null) System.out.printf("%-12s|", "-");
-                else System.out.printf("%-12s|", TABLE[i][j]);
+                if (TABLE[i][j] == null) System.out.printf("%-11s|", "-");
+                else System.out.printf("%-11s|", TABLE[i][j]);
             }
             System.out.println();
         }
