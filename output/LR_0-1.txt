@@ -9,6 +9,7 @@ digraph AFN
 	5 [shape=circle];
 	6 [shape=circle];
 	7 [shape=circle];
+	8 [shape=circle];
 	initial [label = "", shape=none, height = .0, width = .0]
 
 	initial -> 0 
@@ -25,5 +26,6 @@ digraph AFN
 	5 -> 7 [label=term];
 	5 -> 3 [label=ID];
 	5 -> 4 [label=LPAREN];
+	6 -> 8 [label=RPAREN];
 	7 -> 2 [label=TIMES];
 }

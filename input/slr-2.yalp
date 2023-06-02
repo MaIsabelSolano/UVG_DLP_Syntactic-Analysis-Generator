@@ -10,7 +10,8 @@
 %token TIMES
 %token DIV
 %token NUMBER
-%token LPAREN RPAREN
+%token LPAREN
+%token RPAREN
 
 expression:
     expression PLUS term
