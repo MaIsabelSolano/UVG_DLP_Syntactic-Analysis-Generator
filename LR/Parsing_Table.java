@@ -43,7 +43,7 @@ public class Parsing_Table {
             // determine if its a terminal or not
             boolean isTerminal = (pos < terminals.length)? true: false;
 
-            // replace
+            // replace in the table
             if (isTerminal) TABLA[t.getInitialState().getStateNum()][pos] = "s" + Integer.toString(t.getFinalState().getStateNum());
             else TABLA[t.getInitialState().getStateNum()][pos] = Integer.toString(t.getFinalState().getStateNum());
 
@@ -82,13 +82,15 @@ public class Parsing_Table {
     private int getPosition(String X, String[] terminals, String[] nonTerminals) {
         int pos = 0;
 
+        // Checks first the terminals
         for (int i = 0; i < terminals.length; i++) {
-            if (X == terminals[i]) return pos;
+            if (X == terminals[i]) return pos; // Break when found
             else pos ++;
         }
 
+        // Checks non-Terminals, continues adding to pos
         for (int i = 0; i < nonTerminals.length; i++) {
-            if (X == nonTerminals[i]) return pos;
+            if (X == nonTerminals[i]) return pos; // Breaks when found
             else pos ++;
         }
 
