@@ -76,7 +76,7 @@ public class Parsing_Table {
                     // . is the last thing it that production
                     System.out.println(Integer.toString(s.getStateNum()) + ": " + p);
                     
-                    // let's find it´s corresponding productino
+                    // let's find it´s corresponding production
                     int Ipos = getEqualProduction(p, automata.getProductions());
 
                     // get follow of the left side of the production
@@ -143,7 +143,8 @@ public class Parsing_Table {
         // SIMULATION
         
         // Reading found tokens from Tokens.txt
-        Stack<String> tokensFound = new Stack<>();
+        // Tokens Stack
+        Stack<String> input = new Stack<>();
 
 
         String filePath = "output/Tokens.txt";
@@ -161,7 +162,7 @@ public class Parsing_Table {
 
                 // ignore WS
                 if (!left.equals("\\n") && !left.equals("\\s") && !right.equals("ws")) {
-                    tokensFound.add(right);
+                    input.add(0, right); // add at the beggining
                 }
             }
 
@@ -169,8 +170,148 @@ public class Parsing_Table {
             e.printStackTrace();
         }
 
+        // Add end token at the beggining
+        input.add(0, "$"); 
+
         System.out.println("Tokens found");
-        System.out.println(tokensFound.toString());
+        System.out.println(input.toString());
+
+        // States Stack
+        Stack<Integer> statesStack = new Stack<>();
+        statesStack.add(automata.getStates().get(0).getStateNum());
+
+        // Symbols Stack
+        Stack<String> symbolStack = new Stack<>();
+        symbolStack.add("$");
+
+        
+
+
+        boolean done = false;
+        int num = 1; 
+        
+        String currentSymbol = input.peek();
+        int posSymbol = getPosition(currentSymbol, terminals, nonTerminals);
+        int currentState = 0;
+        String nextAction = TABLE[currentState][posSymbol];
+
+        System.out.println("__________________________________________________");
+        System.out.println("__________________________________________________");
+        System.out.println(" " + num + ": ");
+        System.out.println("Stack: " + statesStack.toString());
+        System.out.println("Symbols: " + symbolStack.toString());
+        System.out.println("Current symbol: " + currentSymbol);
+        System.out.println("Current state: " + currentState);
+        System.out.println("Input: " + input.toString());
+        System.out.println("Action: " + nextAction);
+
+        while (!done && num < 100) {
+            num ++;
+
+            if (nextAction == null) {
+
+                System.out.println("\nError");
+
+                ArrayList<String> expectedTokens = new ArrayList<>();
+
+                for (int x = 0; x < terminals.length; x ++) {
+                    if (TABLE[currentState][x] != null) expectedTokens.add(terminals[x]);
+                }
+
+                System.out.println("Expected " + expectedTokens.toString() + " but found " + currentSymbol);
+
+                break;
+            }
+
+            if (nextAction.equals("acc") || nextAction.equals("r0")) {
+                // Accept!
+                System.out.println("\nAccept!");
+
+                // End loop
+                break;
+
+            } else if (nextAction.charAt(0) == 's') {
+                // shift
+
+                // state 
+                currentState = Integer.parseInt(nextAction.substring(1));
+                statesStack.push(currentState);
+
+                symbolStack.push(currentSymbol);
+
+                // get new symbols
+                input.pop();
+                currentSymbol = input.peek();
+
+
+                posSymbol = getPosition(currentSymbol, terminals, nonTerminals);
+                nextAction = TABLE[statesStack.peek()][posSymbol];
+                
+                
+
+                // // Add current symbols to symbol stack 
+                // symbolStack.add(currentSymbol);
+
+                // // Add to stateStack
+
+
+            } else if (nextAction.charAt(0) == 'r') {
+                // reduce
+
+                
+
+                int reduceTo = Integer.parseInt(nextAction.substring(1));
+
+                Production reduceToP = automata.getProductions().get(reduceTo);
+                System.out.println("reduce to " + reduceToP.toString());
+
+                for (String s: reduceToP.getProduce()) statesStack.pop();
+
+
+                int posProduction = getPosition(reduceToP.getName(), terminals, nonTerminals);
+                
+
+                String stateString = TABLE[statesStack.peek()][posProduction];
+
+                statesStack.push(Integer.parseInt(stateString));
+
+                // get next action
+                posSymbol = getPosition(currentSymbol, terminals, nonTerminals);
+                nextAction = TABLE[statesStack.peek()][posSymbol];
+                
+
+            }
+
+            else {
+
+                System.out.println("\nError");
+
+                ArrayList<String> expectedTokens = new ArrayList<>();
+
+                for (int x = 0; x < terminals.length; x ++) {
+                    if (TABLE[currentState][x] != null) expectedTokens.add(terminals[x]);
+                }
+
+                System.out.println("Expected " + expectedTokens.toString() + " but found " + currentSymbol);
+
+                break;
+            }
+            
+
+            // printing results
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            System.out.println(" " + num + ": ");
+            System.out.println("Stack: " + statesStack.toString());
+            System.out.println("Symbols: " + symbolStack.toString());
+            System.out.println("Current symbol: " + currentSymbol);
+            System.out.println("Current state: " + currentState);
+            System.out.println("Input: " + input.toString());
+            System.out.println("Action: " + nextAction);
+
+            // Avoids getting stuck in infinite loops
+            
+        }
         
 
     }
