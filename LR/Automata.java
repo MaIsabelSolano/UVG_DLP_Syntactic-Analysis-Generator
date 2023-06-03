@@ -378,6 +378,16 @@ public class Automata {
         return transitions;
     }
 
+    public Transition getTransition(State initState, String Symbol) {
+        for (Transition t: transitions) {
+            if (t.getInitialState().equals(initState)) {
+                if (t.getExpresion().equals(Symbol)) return t;
+            }
+        }
+
+        return null;
+    }
+
     public ArrayList<String> getExpresions() {
         return expressions;
     }

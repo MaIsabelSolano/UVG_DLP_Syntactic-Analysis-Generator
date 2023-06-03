@@ -19,70 +19,16 @@ function: null
 terminal: false
 operator: false
 ¬
-name: str
-value: ~(~_~)~*
-function: null
-terminal: false
-operator: false
-¬
 name: digit
 value: ~0~|~1~|~2~|~3~|~4~|~5~|~6~|~7~|~8~|~9
 function: null
 terminal: false
 operator: false
 ¬
-name: digits
-value: ~(~digit~)~+
-function: null
-terminal: false
-operator: false
-¬
 name: id
-value: ~(~letter~)~(~(~letter~)~|~(~str~)~|~(~digit~)~)~*
+value: ~(~letter~)~(~(~letter~)~|~(~digit~)~)~*
 function: return ID
 terminal: false
-operator: false
-¬
-name: number
-value: ~(~digits~)~(~.~(~digits~)~)~?~(~E~(~+~|~-~)~?~(~digits~)~)~?
-function: return NUMBER
-terminal: false
-operator: false
-¬
-name: if
-value: ~i~f
-function: return IF
-terminal: false
-operator: false
-¬
-name: else
-value: ~e~l~s~e
-function: return ELSE
-terminal: false
-operator: false
-¬
-name: ;
-value: 
-function: return SEMICOLON
-terminal: true
-operator: false
-¬
-name: :=
-value: ~:~=
-function: return ASSIGNOP
-terminal: false
-operator: false
-¬
-name: <
-value: 
-function: return LT
-terminal: true
-operator: false
-¬
-name: =
-value: 
-function: return EQ
-terminal: true
 operator: false
 ¬
 name: +
@@ -91,21 +37,9 @@ function: return PLUS
 terminal: true
 operator: false
 ¬
-name: -
-value: 
-function: return MINUS
-terminal: true
-operator: false
-¬
 name: *
 value: 
 function: return TIMES
-terminal: true
-operator: false
-¬
-name: /
-value: 
-function: return DIV
 terminal: true
 operator: false
 ¬
